@@ -1,4 +1,5 @@
-import csv 
+import csv
+from math import remainder 
 from src.deadlined_reminders import DeadlinedReminder
 
 def list_reminders():
@@ -14,11 +15,10 @@ def list_reminders():
         print()
 
 def add_reminder(text , date , ReminderClass):
-    reminder=ReminderClass(text,date)
+    if not issubclass(ReminderClass , DeadlinedReminder):
+        raise TypeError("Invalid Reminder Class")
 
-    if not isinstance(reminder,DeadlinedReminder):
-        raise TypeError("Invalid Reminder class")
-   
+    reminder = ReminderClass(text,date)
 
     with open('reminders.csv', 'a+', newline='\n') as file:
         writer = csv.writer(file)
